@@ -80,7 +80,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ap-south-1
+          aws-region: us-east-1
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -90,7 +90,7 @@ jobs:
         run: |
           echo "Registry: ${{ steps.login-ecr.outputs.registry }}"
           echo "Repository: ${{ secrets.AWS_ECR_REPOSITORY }}"
-          echo "Region: ap-south-1"
+          echo "Region: us-east-1"
 
       - name: Build and push image to ECR
         env:
@@ -104,7 +104,7 @@ jobs:
 
       - name: Render ECS task definition
         env:
-          AWS_REGION: ap-south-1
+          AWS_REGION: us-east-1
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
